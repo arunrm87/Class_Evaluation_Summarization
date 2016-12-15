@@ -5,7 +5,7 @@ Parsing the document and removing headers
 	I have extracted from 6 such documents (file names "parse_doc_<number>" represent the parsing code) and added the parsed output to 3 separate files named
 		"outputFile<number>_interest", "outputFile<number>_muddiest", and "outputFile<number>_learning" corresponding to a particular document of given <number>
 
-	If we want to combine these 3 output-files into one single output-file, we could decide and do it later
+---->	If we want to combine these 3 output-files into one single output-file, we could decide and do it later
 
 	
 
@@ -22,9 +22,9 @@ I have added some commented code at the end, which uses a matrix.transpose() fun
 	will need the transpose of our document-term matrix.
 
 More features that could be added to the vectorizer :
-	Select only those bigrams which occur, more than 2 or 3 times in the document (quite unlikely to get them, still we could try)
-	Ratio of stopwords ({0, 0.5, 1}) : Don't know what this means
-	Sentence ratio(No. of sentences including this bigram / Total number of selected sentences)
+---->	Select only those bigrams which occur, more than 2 or 3 times in the document (quite unlikely to get them, still we could try)
+---->	Ratio of stopwords ({0, 0.5, 1}) : Don't know what this means
+---->	Sentence ratio(No. of sentences including this bigram / Total number of selected sentences)
 	
 General references (though I did not use any of them) :
 	http://stats.stackexchange.com/questions/153000/text-analysis-what-after-term-document-matrix
@@ -38,8 +38,15 @@ General references (though I did not use any of them) :
 
 Since the matrix is very sparse, the bigrams have be imputed(extrapolated) so that similar words like "bicycle elements" and "bicycle parts" represent one and the same
 This involves some complex mathematical calculations based on matrices and vectors
-I THINK THERE ARE LIBRARIES TO PERFORM THE SVD, BUT WE NEED TO SPECIFY WHAT VALUES TO GIVE EXACTLY
-	Let us decide how to this, after we discuss about the mathematical analysis in the paper
+----> I THINK THERE ARE LIBRARIES TO PERFORM THE SVD, BUT WE NEED TO SPECIFY WHAT VALUES TO GIVE EXACTLY
+---->	Let us decide how to this, after we discuss about the mathematical analysis in the paper
+
+General references (To understand SVD)
+	https://research.fb.com/fast-randomized-svd/
+	http://www.cs.princeton.edu/courses/archive/spring12/cos598C/svdchapter.pdf
+	"Using Latent Semantic Analysis in Text Summarization"
+	http://nlp.stanford.edu/IR-book/html/htmledition/low-rank-approximations-1.html
+	http://nlp.stanford.edu/IR-book/html/htmledition/latent-semantic-indexing-1.html
 
 
 
@@ -48,7 +55,7 @@ I THINK THERE ARE LIBRARIES TO PERFORM THE SVD, BUT WE NEED TO SPECIFY WHAT VALU
 							ESTIMATING/TUNING THE PARAMETERS OF THE MODEL
 
 There is a hyperparameter that is used (a regularization parameter), that they have sugggested to determine through grid search (on a scale of [0,5] with step size 0.5)
-	I don't know what it means, but it looks like it can be studied in scikit
+---->	I don't know what it means, but it looks like it can be studied in scikit
 
 Gradient descent is used to determine the convergence point of the imputed matrix(matrix obtained by applying SVD on our document-term matrix)
 	This looks straightforward
@@ -62,7 +69,7 @@ Gradient descent is used to determine the convergence point of the imputed matri
 Once we have done the above, we have the optimization function already given in the paper
 It is just a matter of feeding the optimization variables and constraints into a known package. The PuLP package seems to be a good one to do this
 	Remember to choose only those sentences which have atleast 1 bigram from our chosen set of bigrams (note that our chosen set of bigrams could be ones which appear 		more than 2 or 3 times)
-All these optimizations seem to do minimization, we can suitably alter our maximization objective into a minimization one
+----> All these optimizations seem to do minimization, we can suitably alter our maximization objective into a minimization one
 
 References :
 	https://pypi.python.org/pypi/PuLP/1.1													:	PULP for LP
@@ -85,14 +92,22 @@ References :
 
 
 
-		The complex parts are the SVD and estimating of the hyperparameter, which we have to look in detail.
+
+
+---->						POINTS OF DOUBT IN THE PAPER
+				The complex parts are the SVD and estimating of the hyperparameter, which we have to look in detail.
+Why does SVD lead to better representation for the bigrams???
+	The papers 2,3 and 4 in the General References in SVD section(above)seem to give an idea of this, but it is still not clear to me. You could look into it and see
+What is meant by small-omega (it says set of observed value positions, but what does it mean)
+How to tune lambda (the hyperparameter)
+
+
+		
 
 
 
 
-
-
-							OTHER REFERENCES(that use different techniques for text summarization, that we could use if the above does not work)
+						OTHER REFERENCES(that use different techniques for text summarization, that we could use if the above does not work)
 
 http://www.aclweb.org/anthology/P13-1099		:	Alternate paper that seems to do supervised learning
 
