@@ -1,0 +1,41 @@
+from __future__ import print_function
+from sklearn import datasets
+from sklearn import metrics
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction import text 
+import numpy as np
+import sys
+
+
+
+## We don't follow the approach as in Assignment 3(using load_files),
+## because we don't classify based on categories, so we just extract
+## the corpus from the corresponding file into a list and use it
+#training_corpus = datasets.load_files("Training", description=None, load_content=True, encoding='utf-8', decode_error='ignore')
+
+## Preferred stopwords. The decision regarding removal of standard stopwords will be taken later
+stopwords = text.ENGLISH_STOP_WORDS.union("None", "blank", "\n")
+
+## Training_corpus, which is just information extracted from the parsed document
+training_corpus = []
+
+## Each summary has 3 documents, one with interesting points in the
+## class, one with the muddiest points, and one with the points of learning.
+## Below is an example for the document with interesting points in the 1st summary
+file = open("output1_interest")
+
+for i in range(0,52):
+	training_corpus.append(file.readline())
+
+## Creating a document-term matrix based on bigram frequencies, with the use of
+## custom stopwords
+bigram_vectorizer = CountVectorizer(ngram_range=(2, 2),stop_words=stopwords)
+                                    ##  token_pattern=r'\b\w+\b', min_df=1)
+
+Matrix = bigram_vectorizer.fit_transform(training_corpus).toarray()
+print (bigram_vectorizer.get_feature_names())
+print (Matrix[1])
+
+##Transpose = np.array(Matrix)
+##Transpose = Transpose.transpose()
+##print (Transpose[1])
