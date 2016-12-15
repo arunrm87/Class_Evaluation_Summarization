@@ -1,0 +1,105 @@
+							EXTRACTION (DONE)
+
+Parsing the document and removing headers
+	Each summary document in the EXCEL (12 documents in total) has 3 subdivisions per summary : the points of interest, learning points, and muddiest points
+	I have extracted from 6 such documents (file names "parse_doc_<number>" represent the parsing code) and added the parsed output to 3 separate files named
+		"outputFile<number>_interest", "outputFile<number>_muddiest", and "outputFile<number>_learning" corresponding to a particular document of given <number>
+
+	If we want to combine these 3 output-files into one single output-file, we could decide and do it later
+
+	
+
+
+							FORMING THE DOCUMENT TERM MATRIX USING BIGRAMS (DONE FOR 1 DOCUMENT FOR 1 SUBDIVISION AMONG 3, JUST HAVE TO EXTEND FOR THE OTHERS)
+
+The document term matrix is a matrix with the rows corresponding to each sentence in a corpus(or document), and the columns corresponding to each term
+	(which in our case is a bigram).	It has to be noted that this is a sparse matrix.
+The file corresponding to this is "bigram_vectorizer", in which I used CountVectorizer(for now) with stopwords removed
+	Now, I don't know how to check for end-of-file in Python,so I have just fixed a static length based on the actual number of lines in the file (you can fix this)
+What I am doing is to just read from one of the outputFile<number>_interest (or) outputFile<number>_muddiest (or) outputFile<number>_learning files into a list,
+	and using the list as a corpus for the bigram-vectorizer to fit-transform
+I have added some commented code at the end, which uses a matrix.transpose() function, it is because the Support Vector Decomposition(SVD) technique
+	will need the transpose of our document-term matrix.
+
+More features that could be added to the vectorizer :
+	Select only those bigrams which occur, more than 2 or 3 times in the document (quite unlikely to get them, still we could try)
+	Ratio of stopwords ({0, 0.5, 1}) : Don't know what this means
+	Sentence ratio(No. of sentences including this bigram / Total number of selected sentences)
+	
+General references (though I did not use any of them) :
+	http://stats.stackexchange.com/questions/153000/text-analysis-what-after-term-document-matrix
+	http://pydoc.net/Python/textmining/1.0/textmining/
+
+
+
+
+
+							SUPPORT VECTOR DECOMPOSITION
+
+Since the matrix is very sparse, the bigrams have be imputed(extrapolated) so that similar words like "bicycle elements" and "bicycle parts" represent one and the same
+This involves some complex mathematical calculations based on matrices and vectors
+I THINK THERE ARE LIBRARIES TO PERFORM THE SVD, BUT WE NEED TO SPECIFY WHAT VALUES TO GIVE EXACTLY
+	Let us decide how to this, after we discuss about the mathematical analysis in the paper
+
+
+
+
+
+							ESTIMATING/TUNING THE PARAMETERS OF THE MODEL
+
+There is a hyperparameter that is used (a regularization parameter), that they have sugggested to determine through grid search (on a scale of [0,5] with step size 0.5)
+	I don't know what it means, but it looks like it can be studied in scikit
+
+Gradient descent is used to determine the convergence point of the imputed matrix(matrix obtained by applying SVD on our document-term matrix)
+	This looks straightforward
+
+
+
+
+
+							LINEAR OPTIMIZATION
+
+Once we have done the above, we have the optimization function already given in the paper
+It is just a matter of feeding the optimization variables and constraints into a known package. The PuLP package seems to be a good one to do this
+	Remember to choose only those sentences which have atleast 1 bigram from our chosen set of bigrams (note that our chosen set of bigrams could be ones which appear 		more than 2 or 3 times)
+All these optimizations seem to do minimization, we can suitably alter our maximization objective into a minimization one
+
+References :
+	https://pypi.python.org/pypi/PuLP/1.1													:	PULP for LP
+	https://docs.scipy.org/doc/scipy-0.16.1/reference/generated/scipy.optimize.linprog.html	:	scipy simplex optimization
+
+
+
+
+
+							EVALUATION
+
+Evaluation using ROUGE package 
+	Python has ROUGE APIs
+	Comparison can be shown with other systems(for which ROUGE statistics have already been calculated)
+	This looks fairly simple, but we have to study how to use this (won't take much time)
+
+References :
+	https://pypi.python.org/pypi/pyrouge/0.1.0		:	Python interfaces to ROUGE evaluation engine
+
+
+
+
+		The complex parts are the SVD and estimating of the hyperparameter, which we have to look in detail.
+
+
+
+
+
+
+							OTHER REFERENCES(that use different techniques for text summarization, that we could use if the above does not work)
+
+http://www.aclweb.org/anthology/P13-1099		:	Alternate paper that seems to do supervised learning
+
+https://pypi.python.org/pypi/sumy			:	Generic package with different techniques to summarize documents
+
+https://github.com/miso-belica/sumy/tree/dev/sumy	:	Specific technique of SVD, that must be leveraged for our project
+
+http://glowingpython.blogspot.com/2014/09/text-summarization-with-nltk.html
+
+http://www.slideshare.net/ogrisel/statistical-machine-learning-for-text-classification-with-scikitlearn-and-nltk
