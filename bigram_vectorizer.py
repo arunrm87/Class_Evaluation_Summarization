@@ -19,13 +19,17 @@ interest_corpus = []
 learning_corpus = []
 muddiest_corpus = []
 
+bigram_freq = []
+sentences_length = []
 ## Each summary has 3 documents, one with interesting points in the class, one with the muddiest points, and one with the points of learning.
 ## We may later choose to combine all 3 documents into one
 interest_file = open("output1_interest")
 
-for i in range(0,52):
-	interest_corpus.append(interest_file.readline())
+for line in interest_file:
+	interest_corpus.append(line)
+	sentences_length.append(len(line))
 
+#print (interest_corpus)
 ## Creating a document-term matrix based on bigram frequencies, with the use of custom stopwords
 bigram_vectorizer = CountVectorizer(ngram_range=(2, 2),stop_words=stopwords)
 
@@ -38,9 +42,12 @@ interest_Transpose = interest_Transpose.transpose()
 ## Finding the rank of the term-document matrix
 print (np.linalg.matrix_rank(interest_Transpose))
 
+# calculating bigram frequencies
+n_rows, n_cols = interest_Transpose.shape
+for i in range(n_rows):
+	bigram_freq.append(sum(interest_Transpose[i]))
 
-
-
+# ===================================================================================
 muddiest_file = open("output1_muddiest")
 
 for i in range(0,52):
