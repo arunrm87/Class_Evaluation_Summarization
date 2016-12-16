@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Run using parse_doc.py <excel_file> <sheet_no>
 
@@ -18,7 +17,7 @@ excel_file, sheet_no = sys.argv[1], int(sys.argv[2])
 
 ## REMEMBER TO ADD "None" as a stopword, apart from ENGLISH stopwords
 
-workbook = openpyxl.load_workbook('SUMMARY.xlsx')
+workbook = openpyxl.load_workbook(excel_file)
 sheet_names = workbook.get_sheet_names()
 sheet = workbook.get_sheet_by_name(sheet_names[sheet_no])
 
