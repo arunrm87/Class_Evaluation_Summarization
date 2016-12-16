@@ -43,6 +43,7 @@ This involves some complex mathematical calculations based on matrices and vecto
 
 IMPLEMENTATION reference
 	https://gist.github.com/thearn/5424219
+	http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.TruncatedSVD.html
 
 General references (To understand SVD)
 	https://research.fb.com/fast-randomized-svd/
