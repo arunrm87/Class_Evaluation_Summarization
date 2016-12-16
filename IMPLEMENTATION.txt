@@ -15,18 +15,17 @@ Parsing the document and removing headers
 The document term matrix is a matrix with the rows corresponding to each sentence in a corpus(or document), and the columns corresponding to each term
 	(which in our case is a bigram).	It has to be noted that this is a sparse matrix.
 The file corresponding to this is "bigram_vectorizer", in which I used CountVectorizer(for now) with stopwords removed
-	Now, I don't know how to check for end-of-file in Python,so I have just fixed a static length based on the actual number of lines in the file (you can fix this)
+-->	Now, I don't know how to check for end-of-file in Python,so I have just fixed a static length based on the actual number of lines in the file (you can fix this)
 What I am doing is to just read from one of the outputFile<number>_interest (or) outputFile<number>_muddiest (or) outputFile<number>_learning files into a list,
 	and using the list as a corpus for the bigram-vectorizer to fit-transform
 I have added some commented code at the end, which uses a matrix.transpose() function, it is because the Support Vector Decomposition(SVD) technique
 	will need the transpose of our document-term matrix.
 
 More features that could be added to the vectorizer :
----->	Select only those bigrams which occur, more than 2 or 3 times in the document (quite unlikely to get them, still we could try)
+---->	Select only those bigrams which occur, more than 2 or 3 times in the document
 ---->	Ratio of stopwords ({0, 0.5, 1}) : Don't know what this means
----->	Sentence ratio(No. of sentences including this bigram / Total number of selected sentences)
 	
-General references (though I did not use any of them) :
+General references :
 	http://stats.stackexchange.com/questions/153000/text-analysis-what-after-term-document-matrix
 	http://pydoc.net/Python/textmining/1.0/textmining/
 
@@ -38,19 +37,18 @@ General references (though I did not use any of them) :
 
 Since the matrix is very sparse, the bigrams have be imputed(extrapolated) so that similar words like "bicycle elements" and "bicycle parts" represent one and the same
 This involves some complex mathematical calculations based on matrices and vectors
-----> I THINK THERE ARE LIBRARIES TO PERFORM THE SVD, BUT WE NEED TO SPECIFY WHAT VALUES TO GIVE EXACTLY
----->	Let us decide how to this, after we discuss about the mathematical analysis in the paper
 
-IMPLEMENTATION reference
+Implementation reference for Soft-impute algorithm used in the paper :
+--> https://github.com/hammerlab/fancyimpute/blob/master/fancyimpute/soft_impute.py : Seems to be licensed, but package is downloadable
+--> https://web.stanford.edu/~hastie/Papers/mazumder10a.pdf : Don't worry about the Mathematics portion, just look at the SOFT-IMPUTE algorithm alone
+Implementation references for general SVD :
 	https://gist.github.com/thearn/5424219
 	http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.TruncatedSVD.html
 
 General references (To understand SVD)
-	https://research.fb.com/fast-randomized-svd/
-	http://www.cs.princeton.edu/courses/archive/spring12/cos598C/svdchapter.pdf
-	"Using Latent Semantic Analysis in Text Summarization"
 	http://nlp.stanford.edu/IR-book/html/htmledition/low-rank-approximations-1.html
 	http://nlp.stanford.edu/IR-book/html/htmledition/latent-semantic-indexing-1.html
+	"Using Latent Semantic Analysis in Text Summarization"
 
 
 
@@ -58,8 +56,8 @@ General references (To understand SVD)
 
 							ESTIMATING/TUNING THE PARAMETERS OF THE MODEL
 
-There is a hyperparameter that is used (a regularization parameter), that they have sugggested to determine through grid search (on a scale of [0,5] with step size 0.5)
----->	I don't know what it means, but it looks like it can be studied in scikit
+There is a hyperparameter(lambda) that is used, that they have sugggested to determine through grid search (on a scale of [0,5] with step size 0.5)
+---->	I don't know what it means, but it looks we might not need this (look at "How to tune lambda" in "POINTS OF DOUBT IN THE PAPER" section below)
 
 Gradient descent is used to determine the convergence point of the imputed matrix(matrix obtained by applying SVD on our document-term matrix)
 	This looks straightforward, but I don't know if this has to be done
@@ -69,7 +67,6 @@ Gradient descent is used to determine the convergence point of the imputed matri
 
 
 							LINEAR OPTIMIZATION
-
 Once we have done the above, we have the optimization function already given in the paper
 It is just a matter of feeding the optimization variables and constraints into a known package. The PuLP package seems to be a good one to do this
 	Remember to choose only those sentences which have atleast 1 bigram from our chosen set of bigrams (note that our chosen set of bigrams could be ones which appear 		more than 2 or 3 times)
@@ -78,6 +75,15 @@ It is just a matter of feeding the optimization variables and constraints into a
 References :
 	https://pypi.python.org/pypi/PuLP/1.1													:	PULP for LP
 	https://docs.scipy.org/doc/scipy-0.16.1/reference/generated/scipy.optimize.linprog.html	:	scipy simplex optimization
+
+
+
+
+
+---->						POINTS OF DOUBT IN THE PAPER
+How to tune lambda (the hyperparameter)
+	The soft-impute algorithm has a default value(based on some calculation), meaning if we use that package we need not worry about this
+
 
 
 
@@ -92,18 +98,6 @@ Evaluation using ROUGE package
 
 References :
 	https://pypi.python.org/pypi/pyrouge/0.1.0		:	Python interfaces to ROUGE evaluation engine
-
-
-
-
-
-
----->						POINTS OF DOUBT IN THE PAPER
-				The complex parts are the SVD and estimating of the hyperparameter, which we have to look in detail.
-Why does SVD lead to better representation for the bigrams???
-	The papers 2,3 and 4 in the General References in SVD section(above)seem to give an idea of this, but it is still not clear to me. You could look into it and see
-What is meant by small-omega (it says set of observed value positions, but what does it mean)
-How to tune lambda (the hyperparameter)
 
 
 		
