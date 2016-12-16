@@ -41,6 +41,9 @@ This involves some complex mathematical calculations based on matrices and vecto
 ----> I THINK THERE ARE LIBRARIES TO PERFORM THE SVD, BUT WE NEED TO SPECIFY WHAT VALUES TO GIVE EXACTLY
 ---->	Let us decide how to this, after we discuss about the mathematical analysis in the paper
 
+IMPLEMENTATION reference
+	https://gist.github.com/thearn/5424219
+
 General references (To understand SVD)
 	https://research.fb.com/fast-randomized-svd/
 	http://www.cs.princeton.edu/courses/archive/spring12/cos598C/svdchapter.pdf
@@ -58,7 +61,7 @@ There is a hyperparameter that is used (a regularization parameter), that they h
 ---->	I don't know what it means, but it looks like it can be studied in scikit
 
 Gradient descent is used to determine the convergence point of the imputed matrix(matrix obtained by applying SVD on our document-term matrix)
-	This looks straightforward
+	This looks straightforward, but I don't know if this has to be done
 
 
 
