@@ -1,5 +1,5 @@
 """
-Run using bigram_vectorizer.py <text_file>"
+Run using bigram_vectorizer.py <input_file> <summary_output_file> <matrix_option(1/2)>"
 """
 from __future__ import print_function
 from sparse_to_dense import sparse_dense
@@ -54,7 +54,7 @@ def summarize():
 	"""
 	bigram_freq = []
 	sentences_length = []
-	summary = ""
+	summary = []
 	text_corpus = []
 
 	text_file = sys.argv[1]
@@ -64,11 +64,15 @@ def summarize():
 		text_corpus.append(line)
 		sentences_length.append(len(line))	# sentence lengths computed
 
-	# constructing occurrence matrix
-	opt_matrix = construct_occur_matrix(text_file)
-
-	# uncomment the following line to obtain the soft-imputed sparse matrix
-	#opt_matrix = sparse_dense(opt_matrix)
+	allowed_options = [1,2]
+	# constructing sparse occurrence matrix
+	if int(sys.argv[3]) in allowed_options:
+		opt_matrix = construct_occur_matrix(text_file)
+	# constructing soft-imputed sparse matrix
+	if int(sys.argv[3]) == 2:
+		opt_matrix = sparse_dense(opt_matrix)
+	elif int(sys.argv[3]) not in allowed_options:
+		raise ValueError("Options should either be 1 (BaseLine) OR 2 (SoftImpute)!")
 
 	# calculating bigram frequencies
 	n_rows, n_cols = opt_matrix.shape
@@ -84,9 +88,14 @@ def summarize():
 	print ("\nSummarized Text:\n")
 	for val, index in zip(result['y'], range(len(text_corpus))):
 		if val == 1:
-			summary += text_corpus[index]
+			summary.append(text_corpus[index])
 	
-	return summary
+	out_file = open(sys.argv[2], 'w')
+	for line in summary:
+		out_file.write(line)
+	out_file.close()
+
+	return ''.join(summary)
 
 
 if __name__ == '__main__':
