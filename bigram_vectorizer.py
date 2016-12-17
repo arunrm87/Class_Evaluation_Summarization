@@ -2,10 +2,11 @@
 Run using bigram_vectorizer.py <text_file>"
 """
 from __future__ import print_function
+from lp_optimizer import ilp_solve
 from sklearn import datasets
 from sklearn import metrics
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction import text 
+from sklearn.feature_extraction import text
 import numpy as np
 import sys
 
@@ -46,6 +47,8 @@ def main():
 	n_rows, n_cols = text_Transpose.shape
 	for i in range(n_rows):
 		bigram_freq.append(sum(text_Transpose[i]))
+
+	print (ilp_solve(text_Transpose, bigram_freq, sentences_length))
 
 
 if __name__ == '__main__':
