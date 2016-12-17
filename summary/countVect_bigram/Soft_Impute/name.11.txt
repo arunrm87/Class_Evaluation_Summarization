@@ -1,0 +1,4 @@
+Whethere we describe unit cell lengths in terms of a or c
+Atomic packing factor
+How unit cell affects proessing
+The atomic packing factor idea was very confusing and needed more explanation

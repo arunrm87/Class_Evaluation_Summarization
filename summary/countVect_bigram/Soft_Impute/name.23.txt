@@ -1,0 +1,5 @@
+Stress/strain graph calculations
+Yield strength
+The stress vs. strain graph is still a little confusing
+How stress strain is related to crystal structures
+Is the yield strength the vertex?

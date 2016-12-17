@@ -1,0 +1,6 @@
+The ending stuff about atoms on the plane was rushed and confusing
+PD of unit cell
+Counting atoms per plane
+Planar density of atoms
+Packing Density
+Triangular unit cell atom area & packing Density

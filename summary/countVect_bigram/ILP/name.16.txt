@@ -1,0 +1,6 @@
+Unit cell geometry
+Drawing and Indexing planes
+Ran out of time sorry
+Great method to draw the planes!
+I like drawing the planes and finding indices
+Converting the Miller indices into the planes

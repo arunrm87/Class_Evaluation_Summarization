@@ -1,0 +1,5 @@
+Unit cell volume
+Figuring out new origin
+How to determine close packing? Is it just if it's BCC or FCC?
+Unit cell directions- how they indexed- confused on how to find new origin
+Close Packing
