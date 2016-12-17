@@ -1,0 +1,6 @@
+Different types of diffusion related processing (distinguishing them)
+Understanding and applications of Fick's laws formula
+Activation energy's graph and factors affecting it
+Understanding of what diffusion means and how it occur in metals
+Mechanical properties calculation (in test review, problem III, stress-strain curve)
+Test review needs more time

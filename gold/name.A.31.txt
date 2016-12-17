@@ -1,0 +1,9 @@
+Different strengthening mechanism for single phase metals and their application (cold work: 3, solid solution hardening: 1, general: 7)
+Different process of fabrication of metals (I-beams: 3, general: 3)
+Recrystallization & grain boundary  changes
+Misconception: even adding a weaker metal to a stronger metal will make the alloy stronger
+3-D edge and screw dislocation models
+Cyclotron and uranium info
+The difference between Hot & Cold working a metal & its effects on the crystal structure of a metal
+how to affect materials' strength & ductility
+Dislocations

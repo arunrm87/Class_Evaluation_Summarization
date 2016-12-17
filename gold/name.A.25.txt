@@ -1,0 +1,8 @@
+Real examples of failures and why they happened (mostly airplane crash was mentioned)
+Different types of failures
+Brittle vs Ductil fractions
+Types of fatigue behaivior (Fatigue limit)
+Stell vs cast iron (brooklyn bridge)
+Tensile test
+Influence of Temperature on impac Energy
+Rlationship between  fractures/ cracks and the crack length/ crack radius

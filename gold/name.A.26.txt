@@ -1,0 +1,12 @@
+Identifying the graphs for different types of failures, reading the graphs and if they have any specific calculation
+Griffith Crack Formula and concept
+Failure types
+Brittle vs Ductile Fracture (also pictures on slide no. 4)
+Microstuctures of failures
+Influence of T on Impact Energy
+Fracture Toughness Testing
+High Tepm. Creep failure
+How to improve fatigue life
+Initiation in a failure
+All the equations for stress, strain and failures
+HW#8 Elingation

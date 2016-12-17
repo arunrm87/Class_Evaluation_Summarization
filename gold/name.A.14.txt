@@ -1,0 +1,3 @@
+Indexing (most confusing was: choosing the nw origin, then directions within unit cell and then fractions for indecies)
+Differences between unit cells  (BCC, FCC, etc), unit cell calculations related to r & a, unit cell volume
+APF and determining close packing

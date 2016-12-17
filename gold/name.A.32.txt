@@ -1,0 +1,8 @@
+How does dislocation affect Thermal & Electrical conductivity
+What is Cold Working, % Cw calculation, how to read its graphs,  why ductility reduces by CW, CW vs hot work, CW vs Grain size reduction
+Grain Size Reduction understanding, hall-Petch equation, Anealing relation to dislocation and grain size, recrystallization, properties of metals after grain growth
+First activity, difference between deformation processing (Rolling, drawing, extrusion, etc)
+Final activity (Effect of CW, Annealing, grain size on Mechanical & other prop.)
+Why the strengthening occurs based on cold working or hot working
+Why does lead allow for hot working at such a low temp?
+Different strengthen mechanism

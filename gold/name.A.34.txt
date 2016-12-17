@@ -1,0 +1,4 @@
+Solubility limits (Saturation graphs, Saturation and Temp. relation, 1 activity, how sturation limit affects other properties of materials)
+Phase diagram (Composition of alloy, how it shifts from 1 phase to 2 phase, the giraffe!)
+Eutectic composition and how the alloy with lowest melting point can be extremly strong
+The reason that cast iron is weaker than steel and their microstructure
