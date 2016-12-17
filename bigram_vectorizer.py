@@ -16,9 +16,9 @@ def main():
 	stopwords = text.ENGLISH_STOP_WORDS.union("None", "blank", "\n")
 
 	text_corpus = []	# training_corpus - information extracted from the parsed document
-
 	bigram_freq = []
 	sentences_length = []
+	summary = ""
 
 	text_file = open(sys.argv[1])
 
@@ -48,8 +48,16 @@ def main():
 	for i in range(n_rows):
 		bigram_freq.append(sum(text_Transpose[i]))
 
-	print (ilp_solve(text_Transpose, bigram_freq, sentences_length))
+	result = ilp_solve(text_Transpose, bigram_freq, sentences_length, 200)
+	
+	print ("\nNumber of sentences selected for summarization: ", result['y'].count(1.0))
 
+	print ("\nSummarized Text:\n")
+	for val, index in zip(result['y'], range(len(text_corpus))):
+		if val == 1:
+			summary += text_corpus[index]
+	
+	print (summary)
 
 if __name__ == '__main__':
 	main()
