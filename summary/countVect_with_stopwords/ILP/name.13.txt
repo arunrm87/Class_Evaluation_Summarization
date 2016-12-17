@@ -1,0 +1,4 @@
+The direction of the unit  cells ---->It makes sense
+Reminds me of vectors in PHY and Cal
+It was interesting to understand how to find APF & FD from last weeks class
+Learning how to draw in unit cell
