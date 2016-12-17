@@ -1,0 +1,1 @@
+pyrouge_evaluate_plain_text_files -s summary/countVect_with_stopwords/Soft_Impute/ -sfp "name.(\d+).txt" -m gold/ -mfp "name.A.#ID#.txt" 2>/dev/null | grep -v tmp > rouge_scores/countVect_with_stopwords_Soft_Impute.txt
