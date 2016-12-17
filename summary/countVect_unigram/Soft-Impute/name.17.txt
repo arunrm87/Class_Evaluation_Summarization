@@ -1,0 +1,5 @@
+Determining new origin
+The ending stuff about atoms on the plane was rushed and confusing
+Determining indices of given planes was confusing and drawing atoms on planes
+PD of unit cell
+Packing Density

@@ -19,6 +19,7 @@ def construct_occur_matrix(file):
 	"""
 	# pre-defined Stop Words
 	stopwords = text.ENGLISH_STOP_WORDS.union("None", "blank", "\n")
+	omitted_words = ["[blank]\n", "blank\n", "Blank\n", "[Blank]\n"]
 
 	text_corpus = []	# training_corpus - information extracted from the parsed document
 	bigram_freq = []
@@ -28,11 +29,12 @@ def construct_occur_matrix(file):
 	text_file = open(file)
 	# extracting corpus
 	for line in text_file:
-		text_corpus.append(line)
-		sentences_length.append(len(line))	# sentence lengths computed
+		if line not in omitted_words:
+			text_corpus.append(line)
+			sentences_length.append(len(line))	# sentence lengths computed
 
 	# Creating a document-term matrix based on bigram frequencies, with the use of custom stopwords
-	bigram_vectorizer = CountVectorizer(ngram_range=(2, 2), stop_words=stopwords)
+	bigram_vectorizer = CountVectorizer(ngram_range=(1, 2), stop_words=stopwords)
 
 	# transforming corpus to feature matrices
 	text_Matrix = bigram_vectorizer.fit_transform(text_corpus).toarray()
@@ -52,6 +54,7 @@ def summarize():
 	"""
 	returns the summary of a text
 	"""
+	omitted_words = ["[blank]\n", "blank\n", "Blank\n", "[Blank]\n"]
 	bigram_freq = []
 	sentences_length = []
 	summary = []
@@ -61,8 +64,9 @@ def summarize():
 
 	# extracting corpus
 	for line in open(text_file):
-		text_corpus.append(line)
-		sentences_length.append(len(line))	# sentence lengths computed
+		if line not in omitted_words:
+			text_corpus.append(line)
+			sentences_length.append(len(line))	# sentence lengths computed
 
 	allowed_options = [1,2]
 	# constructing sparse occurrence matrix
@@ -93,6 +97,7 @@ def summarize():
 	out_file = open(sys.argv[2], 'w')
 	for line in summary:
 		out_file.write(line)
+
 	out_file.close()
 
 	return ''.join(summary)

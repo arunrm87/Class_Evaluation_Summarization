@@ -1,0 +1,8 @@
+Plane
+Unit cell geometry
+Defects
+Great method to draw the planes!
+Catting the cube with the plane
+Metals deform along specific directions
+Creating planes
+I like drawing the planes and finding indices
