@@ -6,7 +6,6 @@ from __future__ import print_function
 import numpy as np
 import copy
 from sklearn.utils.extmath import randomized_svd
-from bigram_vectorizer import *
 
 
 def check_convergence(old_matrix, new_matrix, threshold):
@@ -28,7 +27,6 @@ def check_convergence(old_matrix, new_matrix, threshold):
 		return ((new / old) < threshold)
 	else:
 		return True
-
 
 
 def svd(A, hyperparam):
@@ -66,7 +64,7 @@ def dense(A, hyperparam, threshold, iterations):
 	return A
 
 
-def sparse_to_dense(summary):
+def sparse_dense(summary):
 	text_copy = copy.deepcopy(summary)
 ## Find a suitable value for the hyperparameter, some random value like 0.5, or based
 ## on some heuristic like (rank of original matrix/10), or (max_singular_value of the
@@ -75,7 +73,7 @@ def sparse_to_dense(summary):
 	hyperparameter = s[0] / 50
 
 	term_document_matrix_rank = np.linalg.matrix_rank(summary)
-	iterations = int(term_document_matrix_rank / 2) 
+	iterations = int(term_document_matrix_rank / 10) 
 
 
 	A_new = dense(text_copy, hyperparameter, 0.02, iterations)
@@ -86,5 +84,6 @@ def sparse_to_dense(summary):
 	##print (np.sum(summary == 0))
 	return A_new
 
+
 if __name__ == '__main__':
-	sparse_to_dense(construct_occur_matrix(sys.argv[1]))
+	sparse_dense(construct_occur_matrix(sys.argv[1]))

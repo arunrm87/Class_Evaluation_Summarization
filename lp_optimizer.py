@@ -69,7 +69,7 @@ def ilp_solve(co_occur_matrix, weights, lengths, max_length=None, concepts_discr
         elif char == 'z':
             res_z[index] = var.varValue
         # DEBUG
-        print(var.name, '=', var.varValue)
+        #print(var.name, '=', var.varValue)
 
     return {'y': res_y, 'z': res_z}
 

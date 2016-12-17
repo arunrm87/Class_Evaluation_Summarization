@@ -2,6 +2,7 @@
 Run using bigram_vectorizer.py <text_file>"
 """
 from __future__ import print_function
+from sparse_to_dense import sparse_dense
 from lp_optimizer import ilp_solve
 from sklearn import datasets
 from sklearn import metrics
@@ -64,15 +65,18 @@ def summarize():
 		sentences_length.append(len(line))	# sentence lengths computed
 
 	# constructing occurrence matrix
-	matrix = construct_occur_matrix(text_file)
+	opt_matrix = construct_occur_matrix(text_file)
+
+	# uncomment the following line to obtain the soft-imputed sparse matrix
+	#opt_matrix = sparse_dense(opt_matrix)
 
 	# calculating bigram frequencies
-	n_rows, n_cols = matrix.shape
+	n_rows, n_cols = opt_matrix.shape
 	for i in range(n_rows):
-		bigram_freq.append(sum(matrix[i]))
+		bigram_freq.append(sum(opt_matrix[i]))
 
 	# identifying the sentences to be included in the summary
-	result = ilp_solve(matrix, bigram_freq, sentences_length, 200)
+	result = ilp_solve(opt_matrix, bigram_freq, sentences_length, 200)
 	
 	# Summary
 	print ("\nNumber of sentences selected for summarization: ", result['y'].count(1.0))
@@ -83,6 +87,7 @@ def summarize():
 			summary += text_corpus[index]
 	
 	return summary
+
 
 if __name__ == '__main__':
 	print(summarize())
