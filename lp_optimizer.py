@@ -2,9 +2,8 @@
 Module to solve the required Linear Programming problems invloved here
 """
 from __future__ import print_function
-from   pulp  import (LpProblem, LpMaximize, LpVariable, LpInteger,
+from   pulp  import (LpProblem, LpMaximize, LpVariable, LpInteger, LpConstraint,
                      lpSum)
-import numpy as np
 
 def ilp_solve(co_occur_matrix, weights, lengths, max_length=None, concepts_discrete=True):
     """
@@ -52,7 +51,7 @@ def ilp_solve(co_occur_matrix, weights, lengths, max_length=None, concepts_discr
     for i in range(N):
         problem += lpSum([A[i][j]*y[j] for j in range(M)]) >= z[i], "z cond 1 (i) -> sum_{j=0_to_M-1}(A[%s][j]y[j] >= z[%s]" % (i,i)
         for j in range(M):
-            problem += A[i][j] <= z[i], "z cond 2 (i,j) -> A[%s][%s] <= z[%s]" % (i,j,i)
+            problem += LpConstraint(A[i][j] <= z[i]) #, "z cond 2 (i,j) -> A[%s][%s] <= z[%s]" % (i,j,i)
 
     if L:
         problem += lpSum([l[j]*y[j] for j in range(M)]) <= L, "length constraint"
@@ -64,11 +63,11 @@ def ilp_solve(co_occur_matrix, weights, lengths, max_length=None, concepts_discr
     res_y = [0 for i in range(M)]
     res_z = [0 for i in range(N)]
     for var in problem.variables():
-        char, index = list(var.name)
+        char, index = var.name[0], int(var.name[1:])
         if char == 'y':
-            res_y[int(index)] = var.varValue
+            res_y[index] = var.varValue
         elif char == 'z':
-            res_z[int(index)] = var.varValue
+            res_z[index] = var.varValue
         # DEBUG
         print(var.name, '=', var.varValue)
 
