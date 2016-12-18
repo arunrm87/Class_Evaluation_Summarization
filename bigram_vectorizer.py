@@ -34,7 +34,7 @@ def construct_occur_matrix(file):
 			sentences_length.append(len(line))	# sentence lengths computed
 
 	# Creating a document-term matrix based on bigram frequencies, with the use of custom stopwords
-	bigram_vectorizer = CountVectorizer(ngram_range=(1, 2), stop_words=stopwords)
+	bigram_vectorizer = CountVectorizer(ngram_range=(2, 2), stop_words=stopwords)
 
 	# transforming corpus to feature matrices
 	text_Matrix = bigram_vectorizer.fit_transform(text_corpus).toarray()
@@ -43,9 +43,6 @@ def construct_occur_matrix(file):
 														# for applying the SVD or SOFT-IMPUTE algorithms
 	texts = np.array(text_Matrix)
 	text_Transpose = texts.transpose()
-
-	## Finding the rank of the term-document matrix
-	#print (np.linalg.matrix_rank(text_Transpose))
 
 	return text_Transpose
 
