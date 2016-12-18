@@ -1,3 +1,6 @@
+"""
+Test LP Solver program (not used by other modules/scripts)
+"""
 from __future__ import print_function
 from sklearn import datasets
 from sklearn import metrics
