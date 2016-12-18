@@ -44,8 +44,6 @@ def ilp_solve(co_occur_matrix, weights, lengths, max_length=None, concepts_discr
     # Objective function
     problem  = LpProblem("Class Evaluation Summary", LpMaximize)
     problem += lpSum([w[i]*z[i] for i in range(N)]), "Obj. function"
-    #for i in range(N):
-    #    problem += w[i]*z[i]
 
     # Constraints
     for i in range(N):
@@ -68,8 +66,6 @@ def ilp_solve(co_occur_matrix, weights, lengths, max_length=None, concepts_discr
             res_y[index] = var.varValue
         elif char == 'z':
             res_z[index] = var.varValue
-        # DEBUG
-        #print(var.name, '=', var.varValue)
 
     return {'y': res_y, 'z': res_z}
 

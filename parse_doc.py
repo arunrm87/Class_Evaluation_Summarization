@@ -1,4 +1,5 @@
 """
+Program to retrieve text from a given sheet number in an excel file
 Run using parse_doc.py <excel_file> <sheet_no>
 
 (Currently works only for the dataset excel file at
@@ -14,8 +15,6 @@ muddiest_point = []
 learning_point = []
 
 excel_file, sheet_no = sys.argv[1], int(sys.argv[2])
-
-## REMEMBER TO ADD "None" as a stopword, apart from ENGLISH stopwords
 
 workbook = openpyxl.load_workbook(excel_file)
 sheet_names = workbook.get_sheet_names()
@@ -48,4 +47,3 @@ for row in range(0,len(point_of_interest)):
 	else:
 		outputFile_learning.write(learning_point[row])
 	outputFile_learning.write("\n")
-
