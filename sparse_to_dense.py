@@ -36,7 +36,6 @@ def check_convergence(old_matrix, new_matrix, threshold):
 	new = np.sqrt(change)
 	old = np.sum(A ** 2) ## Sum of squares of original matrix
 	old = np.sqrt(old)
-	##old = np.sqrt((A ** 2).sum())
 	if (old != 0):
 		return ((new / old) < threshold)
 	else:
@@ -57,6 +56,7 @@ def svd(A, hyperparam):
 	V_new = V[:k, :]
 	S_new = np.diag(s_new)
 	B = np.dot(U_new, np.dot(S_new, V_new))
+
 	return B, k
 	
 
@@ -74,28 +74,25 @@ def dense(A, hyperparam, threshold, iterations):
 		A = B
 		if (converged):
 			break
-	print (i)
+
 	return A
 
 
 def sparse_dense(summary):
 	text_copy = copy.deepcopy(summary)
-## Find a suitable value for the hyperparameter, some random value like 0.5, or based
-## on some heuristic like (rank of original matrix/10), or (max_singular_value of the
-##original matrix / 20)
+	"""
+	Find a suitable value for the hyperparameter, some random value like 0.5, or based
+	on some heuristic like (rank of original matrix/10), or (max_singular_value of the
+	original matrix / 20)
+	"""
 	_, s, _ = randomized_svd(summary, 1, n_iter=5)
 	hyperparameter = s[0] / 50
 
 	term_document_matrix_rank = np.linalg.matrix_rank(summary)
 	iterations = int(term_document_matrix_rank / 10) 
 
-
 	A_new = dense(text_copy, hyperparameter, 0.02, iterations)
 
-	##print (len(A_new) * len(A_new[0]))
-	##print (np.sum(A_new == 0))
-	##print (np.sum(A_new < 0))
-	##print (np.sum(summary == 0))
 	return A_new
 
 
