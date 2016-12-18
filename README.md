@@ -19,6 +19,13 @@ Implementaion Details
 	If <algorithm> is 2, we use ILP + Soft-Impute.
 	We have limited the maximum size of the summary to 200 characters.
 
+    Main driver script              - summarizer.py
+    Module to solve the ILP problem - lp_optimizer.py
+    Module to do Soft-Compute       - sparse_to_dense.py
+
+    [Unimportant] Testing modules/scripts - test_linear_optimization.py,
+                                            parse_doc.py
+
 External dependencies
 ---------------------
 Python modules: numpy, scikit-learn, pulp
