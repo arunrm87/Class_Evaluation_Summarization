@@ -1,5 +1,8 @@
 """
-Run using bigram_vectorizer.py <input_file> <summary_output_file> <matrix_option(1/2)>"
+Run using summarizer.py <input_file> <summary_output_file> <matrix_option(1/2)>
+
+1 - Normal ILP Approach
+2 - ILP + Soft-Impute Approach
 """
 from __future__ import print_function
 from sparse_to_dense import sparse_dense
@@ -101,4 +104,16 @@ def summarize():
 
 
 if __name__ == '__main__':
-	print(summarize())
+    help_text = """
+Run using summarizer.py <input_file> <summary_output_file> <matrix_option(1/2)>
+    
+1 - Normal ILP Approach
+2 - ILP + Soft-Impute Approach
+"""
+    if sys.argv[1] in ('--help', '-h', '-?', '?'):
+        print(help_text)
+    elif len(sys.argv) != 4:
+        print("Invalid option/argument")
+        print(help_text)
+    else:
+    	print(summarize())
